@@ -75,6 +75,7 @@ VOLUME ["/app/backend/db"]
 
 USER app
 
+EXPOSE 3001
 EXPOSE 3002
 
 ENV NODE_ENV=production \
