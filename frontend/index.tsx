@@ -6,6 +6,19 @@ declare const module: {
 };
 
 import React from 'react';
+
+declare global {
+    interface Document {
+        startViewTransition?: (callback: () => void) => Promise<void>;
+    }
+}
+
+if (!document.startViewTransition) {
+    document.startViewTransition = (callback: () => void) => {
+        callback();
+        return Promise.resolve();
+    };
+}
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
@@ -48,6 +61,14 @@ if (container) {
             </BrowserRouter>
         </I18nextProvider>
     );
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch((err) => {
+                console.error('SW registration failed', err);
+            });
+        });
+    }
 }
 
 // Hot Module Replacement (HMR) - Remove this snippet to remove HMR.

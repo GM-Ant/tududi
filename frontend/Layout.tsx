@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { useToast } from './components/Shared/ToastContext';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -44,6 +45,7 @@ const Layout: React.FC<LayoutProps> = ({
     children,
 }) => {
     const { t } = useTranslation();
+    const location = useLocation();
     const { showSuccessToast } = useToast();
     const [isSidebarOpen, setIsSidebarOpen] = useState(
         window.innerWidth >= 1024
@@ -109,6 +111,12 @@ const Layout: React.FC<LayoutProps> = ({
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    useEffect(() => {
+        if (document.startViewTransition) {
+            document.startViewTransition(() => {});
+        }
+    }, [location.pathname]);
 
     const loadNotes = async () => {
         setNotesLoading(true);

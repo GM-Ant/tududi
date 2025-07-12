@@ -8,6 +8,8 @@ import {
 } from '@heroicons/react/24/solid';
 import { useTranslation } from 'react-i18next';
 import PomodoroTimer from './Shared/PomodoroTimer';
+import InstallButton from './Shared/InstallButton';
+import SubscribeButton from './Shared/SubscribeButton';
 
 interface NavbarProps {
     isDarkMode: boolean;
@@ -153,6 +155,8 @@ const Navbar: React.FC<NavbarProps> = ({
                         <InboxIcon className="hidden md:inline-block ml-1.5 h-4 w-4 text-blue-200" />
                     </button>
                     {pomodoroEnabled && <PomodoroTimer />}
+                    <InstallButton />
+                    <SubscribeButton />
 
                     <div className="relative" ref={dropdownRef}>
                         <button
