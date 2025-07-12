@@ -1,6 +1,6 @@
 services:
   tududi:
-    image: chrisvel/tududi:latest
+    build: .
     container_name: tududi
     environment:
       - TUDUDI_USER_EMAIL=admin@example.com
@@ -12,7 +12,7 @@ services:
       # - APP_UID=1001
       # - APP_GID=1001
     volumes:
-      - ./tududi_db:/app/backend/db
+      - tududi_db:/app/backend/db
     ports:
       - "3002:3002"
     restart: unless-stopped
