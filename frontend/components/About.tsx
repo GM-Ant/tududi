@@ -1,10 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HeartIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 
 const About: React.FC = () => {
     const { t } = useTranslation();
     const [version, setVersion] = useState<string>('0.3');
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    const handlePiP = async () => {
+        const video = videoRef.current;
+        if (!video) return;
+        try {
+            if (document.pictureInPictureElement) {
+                await document.exitPictureInPicture();
+            } else {
+                await video.requestPictureInPicture();
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     useEffect(() => {
         // Fetch version from the deployed app
@@ -219,6 +234,27 @@ const About: React.FC = () => {
                                 )}
                             </span>
                         </div>
+                    </div>
+
+                    {/* Demo Video */}
+                    <div className="text-center my-8">
+                        <video
+                            ref={videoRef}
+                            className="mx-auto rounded-lg mb-2"
+                            width="320"
+                            controls
+                        >
+                            <source
+                                src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                        <button
+                            onClick={handlePiP}
+                            className="px-3 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded"
+                        >
+                            PiP
+                        </button>
                     </div>
 
                     {/* Footer */}

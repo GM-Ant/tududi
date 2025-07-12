@@ -32,6 +32,9 @@ const AutoSuggestNextActionBox: React.FC<AutoSuggestNextActionBoxProps> = ({
         if (actionDescription.trim()) {
             onAddAction(actionDescription.trim());
             showSuccessToast(t('success.nextActionAdded'));
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200]);
+            }
             setActionDescription('');
         }
     };

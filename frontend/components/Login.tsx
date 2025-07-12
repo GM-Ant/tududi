@@ -34,6 +34,9 @@ const Login: React.FC = () => {
                     new CustomEvent('userLoggedIn', { detail: data.user })
                 );
 
+                if (navigator.vibrate) {
+                    navigator.vibrate([200, 100, 200]);
+                }
                 navigate('/today');
             } else {
                 setError(data.errors[0] || 'Login failed. Please try again.');
